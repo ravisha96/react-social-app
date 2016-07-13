@@ -11,8 +11,8 @@ var express = require('express'),
  */
 
 
-router.get('/', function (req, res, next) {
-    UserModel.findOne({username: req.headers.username}, function (err, user) {
+router.post('/', function (req, res, next) {
+    UserModel.findOne({username: req.body.username}, function (err, user) {
         if(err) {throw err;}
 
         if(!user) {
@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
             return;
         }
 
-        if(user.password !== req.headers.password) {
+        if(user.password !== req.body.password) {
             res.json({success: false, message: 'Authentication failed. Wrong password.'})
             return;
         }
