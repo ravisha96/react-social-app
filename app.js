@@ -9,7 +9,7 @@ var routes = require('./routes/index');
 var register = require('./routes/register');
 var authenticate = require('./routes/authenticate');
 var verifyRoutes = require('./middlewares/router');
-var port = process.env.PORT || 8080;
+// var port = process.env.PORT || 8080;
 var app = express();
 var router = express.Router();
 
@@ -82,6 +82,6 @@ app.use(function (err, req, res, next) {
 });
 
 
-app.listen(port);
+// app.listen(port);
 
-// module.exports = app;
+module.exports = app;
