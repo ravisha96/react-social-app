@@ -16,7 +16,7 @@ router.post('/', function (req, res, next) {
         if(err) {throw err;}
 
         if(!user) {
-            res.send(req);
+            res.json({success: false, message: req.body});
             return;
         }
 
