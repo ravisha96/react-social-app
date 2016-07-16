@@ -16,7 +16,7 @@ router.post('/', function (req, res, next) {
         if(err) {throw err;}
 
         if(!user) {
-            res.json({success: false, message: 'Authentication failed. Username "' + user + '" not found.'});
+            res.send(req);
             return;
         }
 
