@@ -2,7 +2,6 @@ var express = require('express'),
     router = express.Router(),
     UserModel = require('../models/user'),
     jwt = require('jsonwebtoken'),        /** user to create, sign, and verify tokens. */
-    app = express(),
     config = require('../config');
 
 

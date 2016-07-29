@@ -1,10 +1,10 @@
 var express = require('express'),
     jwt = require('jsonwebtoken'),
     config = require('../config'),
-    routes = express.Router();
+    router = express.Router();
 
-routes.use(function (req, res, next) {
-    
+router.use(function (req, res, next) {
+
     /**
      * check post parameters or url parameter or header parameter for the token.
      */
@@ -33,4 +33,4 @@ routes.use(function (req, res, next) {
     }
 });
 
-module.exports = routes;
+module.exports = router;
