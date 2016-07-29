@@ -9,7 +9,7 @@ var routes = require('./routes/index');
 var register = require('./routes/register');
 var authenticate = require('./routes/authenticate');
 var verifyRoutes = require('./middlewares/router');
-// var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8080;
 var app = express();
 var router = express.Router();
 
@@ -38,11 +38,11 @@ app.use(express.static(path.join(__dirname, 'public')));
  */
 
 app.use('/', routes);
+app.use('/api/register', register);
 app.use('/api/authenticate', authenticate);
 
-/** middleware parse all the routes except /authenticate, order is important here. */ 
+/** middleware parse all the routes except /authenticate, order is important here. */
 app.use('/api', verifyRoutes);
-app.use('/api/register', register);
 
 
 

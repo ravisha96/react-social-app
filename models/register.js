@@ -4,10 +4,8 @@ var Schema = mongoose.Schema;
 
 
 module.exports = mongoose.model('Register', new Schema({
-    firstName: String,
-    lastName: String,
-    middleName: String, 
-    username: String,
-    password: String,
-    admin: Boolean
+    name: String,
+    email: String,
+    phone: String,
+    password: String
 }));
