@@ -6,8 +6,12 @@
 
 
       return router.post('/', function(req, res, next) {
+          var self = this;
           this.io = options.io;
-          this.io.on('connection', callback.call(this));
+          this.io.on('connection', function (socket) {
+              console.log('connected');
+              self.io.emit('chat', 'helo world');
+          });
       });
 
       function callback (socket) {
