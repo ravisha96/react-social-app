@@ -1,9 +1,9 @@
 var express = require('express'),
     io = require('socket.io'),
-    router = express.router();
+    router = express.Router();
 
 
-router('post', function (req, res, next) {
+router.post('/', function (req, res, next) {
   res.send(req.body);
 });
 
