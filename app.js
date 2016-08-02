@@ -82,6 +82,6 @@ app.use(function (err, req, res, next) {
 });
 
 
-// app.listen(port);
+app.listen(port);
 
-module.exports = app;
+// module.exports = app;
