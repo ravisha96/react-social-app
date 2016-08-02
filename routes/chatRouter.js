@@ -1,11 +1,18 @@
-var express = require('express'),
-    io = require('socket.io'),
-    router = express.Router();
+  function chatRouter(options) {
+
+      var express = require('express'),
+          io = require('socket.io'),
+          router = express.Router();
 
 
-router.post('/', function (req, res, next) {
-  res.send(req.body);
-});
+      return router.post('/', function(req, res, next) {
+          this.io = options.io;
+          this.io.on('connection', callback.call(this));
+      });
 
+      function callback (socket) {
+        this.io.emit('chat', 'helo world');
+      }
+  }
 
-module.exports = router;
+  module.exports = chatRouter;
