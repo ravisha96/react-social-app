@@ -6,6 +6,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var config = require('./config');         /** get our configuration file. */
 var routes = require('./routes/index');
+var chatRouter = require('./routes/chatRouter');
 var register = require('./routes/register');
 var authenticate = require('./routes/authenticate');
 var verifyRoutes = require('./middlewares/router');
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/api/register', register);
+app.use('/api/chat', chatRouter);
 app.use('/api/authenticate', authenticate);
 
 /** middleware parse all the routes except /authenticate, order is important here. */
