@@ -1,18 +1,19 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var mongoose = require('mongoose');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-var config = require('./config');         /** get our configuration file. */
-var routes = require('./routes/index');
-var chatRouter = require('./routes/chatRouter');
-var register = require('./routes/register');
-var authenticate = require('./routes/authenticate');
-var verifyRoutes = require('./middlewares/router');
-var port = process.env.PORT || 8080;
-var app = express();
-var router = express.Router();
+var express = require('express'),
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    mongoose = require('mongoose'),
+    logger = require('morgan'),
+    bodyParser = require('body-parser'),
+    config = require('./config'),         /** get our configuration file. */
+    app = express(),
+    routes = require('./routes/index'),
+    register = require('./routes/register'),
+    authenticate = require('./routes/authenticate'),
+    verifyRoutes = require('./middlewares/router'),
+    port = process.env.PORT || 8080,
+    http = require('http'),
+    socketio = require('socket.io'),
+    router = express.Router();
 
 /** Mongoose Connection */
 mongoose.connect(config.database);
@@ -31,6 +32,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+/**
+ * socketio configuration
+ */
+var server = http.createServer(app),
+    io = socketio.listen(server),
+    chatRouter = require('./routes/chatRouter')({io: io});
 
 /**
  * *************************
