@@ -5,14 +5,15 @@ var express = require('express'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
     config = require('./config'),         /** get our configuration file. */
-    app = express(),
     routes = require('./routes/index'),
     register = require('./routes/register'),
+    chatRouter = require('./routes/chatRouter'),
     authenticate = require('./routes/authenticate'),
     verifyRoutes = require('./middlewares/router'),
+    app = express(),
+    server = require('http').createServer(app),
     port = process.env.PORT || 8080,
-    http = require('http'),
-    socketio = require('socket.io'),
+    io = require('socket.io').listen(server),
     router = express.Router();
 
 /** Mongoose Connection */
@@ -34,13 +35,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 /**
- * socketio configuration
- */
-var server = http.createServer(app),
-    io = socketio.listen(server),
-    chatRouter = require('./routes/chatRouter')({io: io});
-
-/**
  * *************************
  * ******  Routes  *********
  * *************************
@@ -48,15 +42,11 @@ var server = http.createServer(app),
 
 app.use('/', routes);
 app.use('/api/register', register);
-app.use('/api/chat', chatRouter);
+app.use('/api/chat', chatRouter({io: io}));
 app.use('/api/authenticate', authenticate);
 
 /** middleware parse all the routes except /authenticate, order is important here. */
 app.use('/api', verifyRoutes);
-
-
-
-
 
 
 
@@ -91,7 +81,6 @@ app.use(function (err, req, res, next) {
   });
 });
 
-
-// app.listen(port);
+server.listen(port);
 
 module.exports = app;
