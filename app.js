@@ -25,12 +25,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 /** Morgon to log requests to the console. */
 app.use(logger('dev'));
-app.set('port', (process.env.PORT || 36588));
+app.set('port', (process.env.PORT || 3658));
 /** Render engine setup */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
 
+io.set('transports', ['xhr-polling']);
+io.set('polling duration', 10);
 
 /**
  * *************************
@@ -79,9 +81,9 @@ app.use(function (err, req, res, next) {
   });
 });
 
-console.log(process.env.PORT);
-server.listen(app.get('port'), function (){
-  console.log('server up and running.')
-});
+
+// server.listen(app.get('port'), function (){
+//   console.log('server up and running.')
+// });
 
 module.exports = app;
