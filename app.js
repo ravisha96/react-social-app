@@ -81,6 +81,6 @@ app.use(function (err, req, res, next) {
   });
 });
 
-server..listen(process.env.PORT || 5000);
+server.listen(process.env.PORT || 5000);
 
 module.exports = app;
