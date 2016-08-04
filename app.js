@@ -84,7 +84,7 @@ app.use(function (err, req, res, next) {
 });
 
 console.log(process.env.PORT);
-server.listen(app.get('port'), function (){
+app.listen(app.get('port'), function (){
   console.log('server up and running.')
 });
 
