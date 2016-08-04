@@ -12,13 +12,15 @@ var express = require('express'),
     verifyRoutes = require('./middlewares/router'),
     app = express(),
     server = require('http').createServer(app),
-    port = process.env.PORT || 8080,
     io = require('socket.io').listen(server),
     router = express.Router();
 
 /** Mongoose Connection */
 mongoose.connect(config.database);
 app.set('supersecret', config.secret);
+
+app.set('port', (process.env.PORT || 5000));
+
 
 /** Bodyparser to extract information from POST and GET. */
 app.use(bodyParser.json());
@@ -81,6 +83,9 @@ app.use(function (err, req, res, next) {
   });
 });
 
-server.listen(process.env.PORT || 5000);
+console.log(process.env.PORT);
+server.listen(app.get('port'), function (){
+  console.log('server up and running.')
+});
 
 module.exports = app;
