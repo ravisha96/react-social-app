@@ -19,17 +19,13 @@ var express = require('express'),
 mongoose.connect(config.database);
 app.set('supersecret', config.secret);
 
-app.set('port', (process.env.PORT || 5000));
-
-
 /** Bodyparser to extract information from POST and GET. */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 /** Morgon to log requests to the console. */
 app.use(logger('dev'));
-
-
+app.set('port', (process.env.PORT || 5000));
 /** Render engine setup */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -84,8 +80,8 @@ app.use(function (err, req, res, next) {
 });
 
 console.log(process.env.PORT);
-app.listen(app.get('port'), function (){
+server.listen(app.get('port'), function (){
   console.log('server up and running.')
 });
 
-// module.exports = app;
+module.exports = app;
