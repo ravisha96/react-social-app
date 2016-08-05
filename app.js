@@ -12,7 +12,7 @@ var express = require('express'),
     verifyRoutes = require('./middlewares/router'),
     app = express(),
     server = require('http').createServer(app),
-    io = require('socket.io').listen(server, {log:false, origins:'*:*'}),
+    io = require('socket.io').listen(server),
     router = express.Router();
 
 /** Mongoose Connection */
