@@ -12,7 +12,7 @@ var express = require('express'),
     verifyRoutes = require('./middlewares/router'),
     app = express(),
     server = require('http').createServer(app),
-    io = require('socket.io')(server),
+    io = require('socket.io').listen(server, { origins: '*:*' }),
     router = express.Router();
 
 /** Mongoose Connection */
@@ -99,8 +99,8 @@ io.on('connection', function () {
   console.log('Hello there you are connected to socketio!!!');
 });
 
-// server.listen(app.get('port'), function (){
-//   console.log('server up and running.')
-// });
+server.listen(app.get('port'), function (){
+  console.log('server up and running.')
+});
 
 module.exports = app;
