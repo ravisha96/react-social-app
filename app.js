@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 /** Morgon to log requests to the console. */
 app.use(logger('dev'));
-app.set('port', (process.env.PORT || 3658));
+app.set('port', (process.env.PORT || 5000));
 /** Render engine setup */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -79,6 +79,9 @@ app.use(function (err, req, res, next) {
   });
 });
 
+io.on('connection', function () {
+  console.log('Hello there you are connected to socketio!!!');
+});
 
 // server.listen(app.get('port'), function (){
 //   console.log('server up and running.')
