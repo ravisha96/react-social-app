@@ -12,7 +12,7 @@ var express = require('express'),
     verifyRoutes = require('./middlewares/router'),
     app = express(),
     server = require('http').createServer(app),
-    io = require('socket.io').listen(server, { origins: '*:*' }),
+    io = require('socket.io').listen(server, {log:false, origins:'*:*'}),
     router = express.Router();
 
 /** Mongoose Connection */
@@ -22,6 +22,7 @@ app.set('supersecret', config.secret);
 
 
 io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling']);
+
 io.set("polling duration", 10);
 
 /** Bodyparser to extract information from POST and GET. */
@@ -99,8 +100,8 @@ io.on('connection', function () {
   console.log('Hello there you are connected to socketio!!!');
 });
 
-server.listen(app.get('port'), function (){
-  console.log('server up and running.')
-});
+// server.listen(app.get('port'), function (){
+//   console.log('server up and running.')
+// });
 
 module.exports = app;
