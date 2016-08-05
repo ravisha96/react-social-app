@@ -19,6 +19,11 @@ var express = require('express'),
 mongoose.connect(config.database);
 app.set('supersecret', config.secret);
 
+
+
+io.set("transports", ["xhr-polling"]);
+io.set("polling duration", 10);
+
 /** Bodyparser to extract information from POST and GET. */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,15 +37,26 @@ app.set('view engine', 'jade');
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+    next();
+});
+
 /**
  * *************************
  * ******  Routes  *********
  * *************************
  */
 
-app.use('/', routes);
+app.use('/', function (req, res) {
+  res.sendFile(__dirname, '/public/chat.html');
+});
 app.use('/api/register', register);
-app.use('/api/chat', chatRouter({io: io}));
+// app.use('/api/chat', chatRouter({io: io}));
 app.use('/api/authenticate', authenticate);
 
 /** middleware parse all the routes except /authenticate, order is important here. */
