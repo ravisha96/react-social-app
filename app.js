@@ -1,5 +1,4 @@
-var express = require('express');
-    app = require('express.io')(),
+var express = require('express'),
     path = require('path'),
     favicon = require('serve-favicon'),
     mongoose = require('mongoose'),
@@ -10,17 +9,21 @@ var express = require('express');
     register = require('./routes/register'),
     chatRouter = require('./routes/chatRouter'),
     authenticate = require('./routes/authenticate'),
-    verifyRoutes = require('./middlewares/router');
-
-
-app.http().io();
+    verifyRoutes = require('./middlewares/router'),
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io').listen(server),
+    router = express.Router();
 
 /** Mongoose Connection */
 mongoose.connect(config.database);
 app.set('supersecret', config.secret);
 
-// io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling']);
-// io.set("polling duration", 10);
+
+
+io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling']);
+
+io.set("polling duration", 10);
 
 /** Bodyparser to extract information from POST and GET. */
 app.use(bodyParser.json());
@@ -50,9 +53,8 @@ app.use(function(req, res, next) {
  * *************************
  */
 
-app.get('/', function (req, res) {
-  console.log(__dirname);
-  res.sendfile(__dirname, '/public/index.html');
+app.use('/', function (req, res) {
+  res.sendFile(__dirname, '/public/chat.html');
 });
 app.use('/api/register', register);
 // app.use('/api/chat', chatRouter({io: io}));
@@ -94,15 +96,17 @@ app.use(function (err, req, res, next) {
   });
 });
 
-// Setup the ready route, and emit talk event.
-app.io.route('chat', function(req) {
-  console.log('socket.io connected');
-  req.io.emit('talk', {
-      message: 'io event from an io route on the server'
-  });
+io.on('connection', function (socket) {
+  console.log('Hello there you are connected to socketio!!!');
+  socket.emit('chat', {message: 'hello there!'})
 });
 
-app.listen(app.get('port'), function (){
+io.sockets.on('connection', function (socket) {
+  console.log('Hello there you are connected to 2 approach!!!');
+  socket.emit('chat', {message: 'hello there!'})
+});
+
+server.listen(app.get('port'), function (){
   console.log('server up and running.')
 });
 
