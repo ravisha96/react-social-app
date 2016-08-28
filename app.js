@@ -53,9 +53,7 @@ app.use(function(req, res, next) {
  * *************************
  */
 
-app.use('/', function (req, res) {
-  res.sendFile(__dirname, '/public/chat.html');
-});
+app.use('/', routes);
 app.use('/api/register', register);
 // app.use('/api/chat', chatRouter({io: io}));
 app.use('/api/authenticate', authenticate);
