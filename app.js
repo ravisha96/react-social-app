@@ -9,6 +9,7 @@ var express = require('express'),
     register = require('./routes/register'),
     chatRouter = require('./routes/chatRouter'),
     authenticate = require('./routes/authenticate'),
+    getAllUsers = require('./routes/getAllUsers'),
     verifyRoutes = require('./middlewares/router'),
     app = express(),
     server = require('http').createServer(app),
@@ -55,13 +56,12 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/api/register', register);
+app.use('/api/getAllUsers', getAllUsers);
 // app.use('/api/chat', chatRouter({io: io}));
 app.use('/api/authenticate', authenticate);
 
 /** middleware parse all the routes except /authenticate, order is important here. */
 app.use('/api', verifyRoutes);
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -94,16 +94,16 @@ app.use(function (err, req, res, next) {
   });
 });
 
-io.on('connection', function (socket) {
-  console.log('Hello there you are connected to socketio!!!');
-  socket.emit('chat', {message: 'hello there!'})
-});
-
-io.sockets.on('connection', function (socket) {
-  console.log('Hello there you are connected to 2 approach!!!');
-  socket.emit('chat', {message: 'hello there!'})
-});
-
+// io.on('connection', function (socket) {
+//   console.log('Hello there you are connected to socketio!!!');
+//   socket.emit('chat', {message: 'hello there!'})
+// });
+//
+// io.sockets.on('connection', function (socket) {
+//   console.log('Hello there you are connected to 2 approach!!!');
+//   socket.emit('chat', {message: 'hello there!'})
+// });
+//
 server.listen(app.get('port'), function (){
   console.log('server up and running.')
 });
