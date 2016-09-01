@@ -56,10 +56,9 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/api/register', register);
-app.use('/api/getAllUsers', getAllUsers);
 // app.use('/api/chat', chatRouter({io: io}));
 app.use('/api/authenticate', authenticate);
-
+app.use('/api/getAllUsers', getAllUsers);
 /** middleware parse all the routes except /authenticate, order is important here. */
 app.use('/api', verifyRoutes);
 
