@@ -96,7 +96,7 @@ app.use(function (err, req, res, next) {
 io.on('connection', function (socket) {
   console.log('Hello there you are connected to socketio!!!');
   socket.on('usermsg', function (msg) {
-    socket.emit(msg);
+    socket.emit('chat', msg);
   });
 });
 
