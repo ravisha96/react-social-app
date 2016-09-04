@@ -23,7 +23,7 @@ app.set('supersecret', config.secret);
 
 
 io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling']);
-
+io.set('origins', '*:*');
 io.set("polling duration", 10);
 
 /** Bodyparser to extract information from POST and GET. */
