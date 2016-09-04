@@ -95,12 +95,9 @@ app.use(function (err, req, res, next) {
 
 io.on('connection', function (socket) {
   console.log('Hello there you are connected to socketio!!!');
-  socket.emit('chat', {message: 'hello there!'})
-});
-
-io.sockets.on('connection', function (socket) {
-  console.log('Hello there you are connected to 2 approach!!!');
-  socket.emit('chat', {message: 'hello there!'})
+  socket.on('usermsg', function (msg) {
+    socket.emit(msg);
+  });
 });
 
 server.listen(app.get('port'), function (){
