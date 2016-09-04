@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
         res.send({
             success: true,
             message: 'Successfully retrived ' + result.length + ' users.',
-            data: result
+            friends: result
         });
     });
 });
