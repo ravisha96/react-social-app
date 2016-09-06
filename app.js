@@ -4,14 +4,15 @@ var express = require('express'),
     mongoose = require('mongoose'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
+    app = express(),
     config = require('./config'),         /** get our configuration file. */
     routes = require('./routes/index'),
     register = require('./routes/register'),
     chatRouter = require('./routes/chatRouter'),
     authenticate = require('./routes/authenticate'),
     getAllUsers = require('./routes/getAllUsers'),
+    getMyDetails = require('./routes/getMyDetails')(app),
     verifyRoutes = require('./middlewares/router'),
-    app = express(),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server),
     router = express.Router();
@@ -56,8 +57,8 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/api/register', register);
-// app.use('/api/chat', chatRouter({io: io}));
-app.use('/api/authenticate', authenticate);
+app.use('/api/getMyDetails', getMyDetails);
+// app.use('/api/authenticate', authenticate);
 app.use('/api/getAllUsers', getAllUsers);
 /** middleware parse all the routes except /authenticate, order is important here. */
 app.use('/api', verifyRoutes);
