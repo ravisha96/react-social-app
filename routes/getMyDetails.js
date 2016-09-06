@@ -12,11 +12,9 @@
 
   function Router(app) {
       router.get('/', function(req, res, next) {
-          var authorization,
+          var authorization = req.body.token ||  req.query.token || req.headers['x-access-token'],
               decode;
-          if (req.headers && req.headers.authorization) {
-              authorization = req.headers.authorization;
-
+          if (authorization) {
               try {
                   decode = jwt.verify(authorization, app.get('supersecret'));
               } catch (e) {
