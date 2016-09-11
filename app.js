@@ -57,11 +57,11 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/api/register', register);
+app.use('/api/authenticate', authenticate);
+app.use('/api', verifyRoutes);
 app.use('/api/getMyDetails', getMyDetails);
-// app.use('/api/authenticate', authenticate);
 app.use('/api/getAllUsers', getAllUsers);
 /** middleware parse all the routes except /authenticate, order is important here. */
-app.use('/api', verifyRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

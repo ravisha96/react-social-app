@@ -22,7 +22,7 @@
               }
           }
 
-          return res.send(decode._doc);
+          return res.send(authorization);
       });
 
       return router;
