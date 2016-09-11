@@ -10,6 +10,7 @@ router.use(function (req, res, next) {
      */
     var token = req.body.token ||  req.query.token || req.headers['x-access-token'];
     console.log(req.headers);
+    console.log(req.headers['x-access-token']);
     // decode token
     if(token) {
         jwt.verify(token, config.secret, function (err, decoded) {
