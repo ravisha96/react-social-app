@@ -1,4 +1,5 @@
 var express = require('express'),
+    cors = require('cors'),
     path = require('path'),
     favicon = require('serve-favicon'),
     mongoose = require('mongoose'),
@@ -17,6 +18,8 @@ var express = require('express'),
     io = require('socket.io').listen(server),
     router = express.Router();
 
+
+app.use(cors());
 /** Mongoose Connection */
 mongoose.connect(config.database);
 app.set('supersecret', config.secret);
@@ -44,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
     next();
 });
