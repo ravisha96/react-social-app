@@ -11,6 +11,7 @@ var express = require('express'),
 
 
 router.post('/', function (req, res, next) {
+  console.log(req.body.username);
     UserModel.findOne({username: req.body.username}, function (err, user) {
         if(err) {throw err;}
 
