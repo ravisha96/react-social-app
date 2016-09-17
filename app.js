@@ -12,7 +12,7 @@ var express = require('express'),
     chatRouter = require('./routes/chatRouter'),
     authenticate = require('./routes/authenticate'),
     getAllUsers = require('./routes/getAllUsers'),
-    refreshAuthToken = require('./routes/refreshAuthToken')(express);
+    // refreshAuthToken = require('./routes/refreshAuthToken')(express);
     getMyDetails = require('./routes/getMyDetails')(app),
     verifyRoutes = require('./middlewares/router'),
     server = require('http').createServer(app),
@@ -61,7 +61,7 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/api/register', register);
-app.use('/api/refreshAuthToken', refreshAuthToken);
+// app.use('/api/refreshAuthToken', refreshAuthToken);
 app.use('/api/authenticate', authenticate);
 // app.use('/api', verifyRoutes);
 app.use('/api/getMyDetails', getMyDetails);
