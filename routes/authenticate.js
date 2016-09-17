@@ -15,7 +15,7 @@ router.post('/', function (req, res, next) {
         if(err) {throw err;}
 
         if(!user) {
-            res.json({success: false, message: err});
+            res.json({success: false, message: 'Username not valid'});
             return;
         }
 
